@@ -13,22 +13,16 @@
  */
 
 // Diretório principal
-define('APPPATH', getcwd().'/sqlexpress/');
+define('APPPATH', getcwd().'/');
+
 
 require_once(APPPATH.'helpers/errors.php'); //Exibição de erros
 require_once(APPPATH.'config/config.php');  //Configurações de parâmetros
+require_once(APPPATH.'class/Sqlconn.php');  //Configurações de parâmetros
  
 
-class SQL
+class SQLExpress extends SQL_Conn
 {
-
-	private $host 	= HOST; 	//127.0.0.1
-	private $dbname = DBNAME; 	// nome_banco
-	private $user 	= USER; 	//root
-	private $pass 	= PASS; 	//root
-	private $driver = DRIVER; 	//mysql, postgre
-	private $conn 	= CONN;		// string conn
-	private $sql 	= SQL;		// query
 
 	public function __construct(){
 		if($this->conn == null){	
@@ -36,20 +30,8 @@ class SQL
 		}
 	}
 
-	public function conecta(){
-		try{
-			// drive de conexão PDO Postgres::pgsql. MySQL::mysql.
-			$this->conn = new PDO("{$this->driver}:host={$this->host};dbname={$this->dbname};", $this->user, $this->pass);
-			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}catch(PDOException $e){
-			echo ('ERRO: Verifique os atributos de conexão na classe. <br/>'); 
-			die ('PDO ERROR: '.$e->getMessage());
-		}
-		return $this->conn;
-	}
-
 /**
-* Função que realiza um CRUD simples
+* Função que realiza um CRUD
 * 
 * @param string - tipo de ação a ser executada [select, insert, update, delete]
 * @param array - valores passados
@@ -152,6 +134,11 @@ class SQL
 		return $this->sql;
 	}
 
+/**
+	* Função que cria um array de objetos associativos através da query
+	*
+	* @return object array: array[]->object = value;
+*/
 	public function assoc(){
 		if($this->run() == false):
 			return 'Nenhuma query para criar assoc';
@@ -190,3 +177,4 @@ class SQL
 			echo $e->getMessage();
 	}
 }
+

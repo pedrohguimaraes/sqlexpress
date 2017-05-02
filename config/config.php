@@ -13,10 +13,10 @@
  *
  */
 
-define('HOST', 		'');
-define('DBNAME', 	'');
-define('USER', 		'');
-define('PASS', 		'');
-define('DRIVER',	''); // Driver no PDO
+define('HOST', 		'10.0.7.107');
+define('DBNAME', 	'remos_db');
+define('USER', 		'postgres');
+define('PASS', 		'jcl2009');
+define('DRIVER',	'pgsql'); /** Driver do PDO [mysql, pgsql, etc.] */
 define('CONN', 		null);
 define('SQL',		null);
